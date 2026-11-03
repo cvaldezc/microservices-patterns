@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: ecommerce-saga
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: order-service
+      properties:
+        spring.json.trusted.packages: "schema.model.event"
+
+  r2dbc:
+    url: r2dbc:h2:mem:///testdb?DELAY_CLOSED=-1
+    username: sa
+    password:
+
+app:
+  order:
+    topic: order-events
+

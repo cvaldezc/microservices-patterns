@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: payment-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: payment-service-final
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: "*" # <-- Confía en cualquier paquete para evitar bloqueos de seguridad
+        # Si el JSON viene de Kafka-UI sin cabeceras de Java, le decimos a Jackson a qué clase forzar el mapeo:
+        spring.json.value.default.type: "schema.model.event.OrderEvent"
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+server:
+  port: 8081

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS orders (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  account_id VARCHAR(20),
+  amount DECIMAL(18, 2),
+    status VARCHAR(20)
+);
